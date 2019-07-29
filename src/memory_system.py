@@ -22,10 +22,11 @@ class MemorySystem:
         self.forget_age_threshold        = forget_age_threshold
 
         self.max_memory_size             = max_memory_size
+        self.current_action = ''
 
 
 
-    def create_memory(self, latent_representation, solution):
+    def create_memory(self, latent_representation, solution, tag=''):
 
         # should forget stuff come before making new memeories
 
@@ -33,7 +34,7 @@ class MemorySystem:
 
             memory = {'latent_representation': latent_representation,
                       'solution': solution, 'usage': 0, 'age': 0,
-                      'tag': 'None', 'similarity_score': 0}
+                      'tag': tag, 'similarity_score': 0}
 
             self.memories.append(memory)
 
@@ -43,7 +44,8 @@ class MemorySystem:
         # frequently thus it maybe worth forgetting this information
 
     def clean_up(self):
-        pass
+        self.highly_similarity_memories = []
+        self.low_similarity_memories = []
 
     def query(self, current_latent_representation):
 
@@ -92,19 +94,24 @@ class MemorySystem:
 
             memory = self.highly_similarity_memories[index]
             action = 'memory_to_fs_system_switch'
+            self.current_action = action
 
         elif len(self.highly_similarity_memories) == 0 and len(self.medium_similarity_memories) > 0:
             memory = None
             action = 'adaption_using_medium_memory_as_init_foundation'
+            self.current_action = action
 
         elif len(self.highly_similarity_memories) == 0 and len(self.medium_similarity_memories) == 0 and len(self.low_similarity_memories) > 0:
             memory = None
             action = 'adaption_using_low_memory_and_random_init_foundation'
+            self.current_action = action
 
         elif len(self.memories) == 0:
             memory = None
             action = 'adaption_using_low_memory_and_random_init_foundation'
+            self.current_action = action
 
+        self.clean_up()
         return memory, action
 
 
@@ -123,3 +130,21 @@ class MemorySystem:
 
         result = math.sqrt(sum)
         return result
+
+    @staticmethod
+    def init(MODE, low_simularity_threshold,high_simularity_threshold,
+                               forget_usage_threshold,forget_age_threshold,
+                               max_memory_size):
+
+        if MODE == 'test':
+            ms = MemorySystem(low_simularity_threshold=low_simularity_threshold,
+                              high_simularity_threshold=high_simularity_threshold,
+                              forget_usage_threshold=forget_usage_threshold,
+                              forget_age_threshold=forget_age_threshold,
+                              max_memory_size=max_memory_size)
+
+            return ms
+
+        else:
+
+            return None

@@ -85,12 +85,14 @@ class CNN_DenseLatentSpace(AutoEncoder):
 
 if __name__ == '__main__':
 
-    CNND = CNN_DenseLatentSpace(img_shape=(40, 40, 1), latent_dimensions=15, batch_size=64)
-    CNND.data_prep(directory_path='../AE_data/data_1_static/', skip_files=['.json'], data_index=0, label_index=1,
-                   normalize=True, remove_blanks=True, data_type='train')
+    skip_files = ['level_1', 'level_2',
+                  'level_3', 'level_4', 'level_5']
 
-    CNND.map_labels_to_codes()
+    CNND = CNN_DenseLatentSpace(img_shape=(40, 40, 1), latent_dimensions=3, batch_size=1)
+    CNND.data_prep_simple(directory_path='../AE_data/test/', skip_files=skip_files)
+
+    CNND.y_train = [0]
     CNND.define_model()
-    CNND.train(epochs=20)
-    CNND.inspect_model()
+    CNND.train(epochs=1000)
+    CNND.inspect_model(n=1, dim_reduction_model='pca')
     CNND.save(name='CNND', save_type='weights_and_reconstruction_error')

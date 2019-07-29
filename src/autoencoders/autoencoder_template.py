@@ -2,7 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 import os
-from file_extractor import FileExtractor
+from old_code.file_extractor import FileExtractor
 from sklearn.manifold import TSNE
 import sklearn.decomposition as decomposition
 import time
@@ -41,6 +41,17 @@ class AutoEncoder:
 
 
 
+    def data_prep_simple(self, directory_path, skip_files):
+        data = FileExtractor.extract(directory_path=directory_path, skip_files=skip_files)
+
+        x = []
+
+        for sample in data:
+            x.append(np.reshape(sample.astype('float32'), newshape=sample.shape + (1,)))
+
+        x = np.array(x)
+        self.x_train = x
+        self.data_flag = True
 
     def data_prep(self, directory_path, skip_files, data_index,
                   label_index, normalize, remove_blanks, data_type):
@@ -172,7 +183,7 @@ class AutoEncoder:
             # =======================================================================================================================
             history = self.model.fit(x=self.x_train, y=self.x_train,
                                    shuffle=True, epochs=epochs, batch_size=self.batch_size,
-                                   validation_split=0.1, verbose=2)
+                                   validation_split=0, verbose=2)
 
             self.history = history
             self.train_flag = True
@@ -214,16 +225,18 @@ class AutoEncoder:
 
 
     def pca(self, input, dimensions):
-
+        time_start = time.time()
         pca = decomposition.PCA(n_components=dimensions)
         pca.fit(input)
         input = pca.transform(input)
+        print('PCA done! Time elapsed: {} seconds'.format(time.time() - time_start))
         return input
 
     def show_label_codes(self):
 
-        for key in self.label_table_train:
-            print('Label: %s Code: %s' % (key, self.label_table_train.get(key).get('code')))
+        if self.label_table_train is not None:
+            for key in self.label_table_train:
+                print('Label: %s Code: %s' % (key, self.label_table_train.get(key).get('code')))
 
 
     def save(self, name, save_type):
@@ -276,7 +289,7 @@ class AutoEncoder:
             print('SAVE WEIGHTS COMPLETE: Reconstrunction Error = %s' % RE)
 
 
-    def inspect_model(self, dim_reduction_model='tsne', dimensions=2):
+    def inspect_model(self, dim_reduction_model='tsne', dimensions=2, n=4, plot_rand=False):
         # PLOTTING & METRICS===================================================================================================
 
         # plot the latent space of the VAE
@@ -286,12 +299,18 @@ class AutoEncoder:
                             batch_size=self.batch_size, dim_reduction_model=dim_reduction_model,
                             dimensions=dimensions)
 
+        c = None
+        if self.label_keys_train is None:
+            c = len(self.y_train)
+        else:
+            c = len(self.label_keys_train)
+
         if pred.shape[1] == 2:
             plt.figure(figsize=(16, 10))
             sns.scatterplot(
                 x=pred[:, 0], y=pred[:, 1],
-                hue=self.y_test,
-                palette=sns.color_palette("hls", len(self.label_keys_train)),
+                hue=self.y_train,
+                palette=sns.color_palette("hls", c),
                 legend="full",
                 alpha=0.3
             )
@@ -306,8 +325,10 @@ class AutoEncoder:
 
         # Plot comparisons between original and decoded images with test data
         decoded_imgs = self.model.predict(self.x_train)
-        n = 10
-        image_samples = np.random.randint(0, len(self.x_train), size=n)
+        if plot_rand:
+            image_samples = np.random.randint(0, len(self.x_train), size=n)
+        else:
+            image_samples = np.arange(n)
         plt.figure(figsize=(20, 4))
 
         for i in range(n):
@@ -325,14 +346,15 @@ class AutoEncoder:
 
         # Plot Traning and validation reconstruction error
         loss = self.history.history['loss']
-        val_loss = self.history.history['val_loss']
+        val_loss = self.history.history.get('val_loss')
 
         epochs = range(1, len(loss) + 1)
 
         plt.figure()
 
         plt.plot(epochs, loss, 'g', label='training loss')
-        plt.plot(epochs, val_loss, 'r', label='validation loss')
+        if val_loss is not None:
+            plt.plot(epochs, val_loss, 'r', label='validation loss')
         plt.title('Training and Validation Reconstruction Error')
         plt.legend()
 

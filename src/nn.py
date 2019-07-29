@@ -1,5 +1,5 @@
 import numpy as np
-from Random import Random
+from old_code.Random import Random
 import math
 import os
 import pickle as pkl
@@ -58,6 +58,7 @@ class NeuralNetwork:
             self.activation_functions = activation_func_list
 
         self.CLASS_TAG = "nn.py"
+        self.name = 'train_agent'
 
 
     def init_layers(self, init_type=None):

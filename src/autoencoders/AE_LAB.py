@@ -92,11 +92,11 @@ def plot_reconstructions(model, x_test, img_shape, title='', n=10):
         # disp original
 
         ax = plt.subplot(2, n, i + 1)
-        plt.imshow(x_test[selection[i]].reshape(img_x, img_y))
+        plt.imshow(x_test[i].reshape(img_x, img_y))
         plt.gray()
 
         ax = plt.subplot(2, n, i + n + 1)
-        plt.imshow(decoded_imgs[selection[i]].reshape(img_x,img_y))
+        plt.imshow(decoded_imgs[i].reshape(img_x,img_y))
         plt.gray()
 
     plt.title(title)
@@ -123,44 +123,50 @@ def make_numeric(input, value):
 
 
 # Define Model to be tested
-MODEL = VaritationalAutoEncoderSymmetric(img_shape=(40, 40, 1), latent_dimensions=3, batch_size=128)
-MODEL.load_weights(full_path='models/VAE_SYM2-1')
+MODEL = CNN_DenseLatentSpace(img_shape=(40, 40, 1), latent_dimensions=3, batch_size=128)
+MODEL.load_weights(full_path='models/CNND')
+
 
 # get data the model has trained on
-MODEL.data_prep(directory_path='../AE_data/data_0_static/', skip_files=['.json'], data_index=0, label_index=1,
-                normalize=True, remove_blanks=True, data_type='train')
+MODEL.data_prep_simple(directory_path='../AE_data/test/', skip_files=['level_1', 'level_2', 'level_3', 'level_4', 'level_5'])
+MODEL.y_train = [0]
 x_train_seen, y_train_seen = [MODEL.x_train, MODEL.y_train]
+
 #======================================================================================================================
 
 # get data the 
-MODEL.data_prep(directory_path='../AE_data/data_1_static/', skip_files=['.json'], data_index=0, label_index=1,
-                normalize=True, remove_blanks=True, data_type='train')
+MODEL.data_prep_simple(directory_path='../AE_data/test/', skip_files=['level_0','level_2', 'level_3', 'level_4', 'level_5'])
+MODEL.y_train = [1]
 x_train_unseen, y_train_unseen = [MODEL.x_train, MODEL.y_train]
 
-MODEL.data_prep(directory_path='../AE_data/data_2_static/', skip_files=['.json'], data_index=0, label_index=1,
-                normalize=True, remove_blanks=True, data_type='train')
+
+MODEL.data_prep_simple(directory_path='../AE_data/test/', skip_files=['level_0', 'level_1','level_3', 'level_4', 'level_5'])
+MODEL.y_train = [2]
 x_train_unseen2, y_train_unseen2 = [MODEL.x_train, MODEL.y_train]
 
-MODEL.data_prep(directory_path='../AE_data/data_3_static/', skip_files=['.json'], data_index=0, label_index=1,
-                normalize=True, remove_blanks=True, data_type='train')
+
+MODEL.data_prep_simple(directory_path='../AE_data/test/', skip_files=['level_0', 'level_1', 'level_2','level_4', 'level_5'])
+MODEL.y_train = [3]
 x_train_unseen3, y_train_unseen3 = [MODEL.x_train, MODEL.y_train]
 
-MODEL.data_prep(directory_path='../AE_data/data_4_static/', skip_files=['.json'], data_index=0, label_index=1,
-                normalize=True, remove_blanks=True, data_type='train')
+
+MODEL.data_prep_simple(directory_path='../AE_data/test/', skip_files=['level_0', 'level_1', 'level_2', 'level_3', 'level_5'])
+MODEL.y_train = [4]
 x_train_unseen4, y_train_unseen4 = [MODEL.x_train, MODEL.y_train]
 
-MODEL.data_prep(directory_path='../AE_data/data_0_static/', skip_files=['.json'], data_index=0, label_index=1,
-                normalize=True, remove_blanks=True, data_type='train')
+
+MODEL.data_prep_simple(directory_path='../AE_data/test/', skip_files=['level_0', 'level_1', 'level_2', 'level_3', 'level_4'])
+MODEL.y_train = [5]
 x_train_unseen5, y_train_unseen5 = [MODEL.x_train, MODEL.y_train]
 
 
 
-y_train_seen    = make_numeric(y_train_seen,    0)
-y_train_unseen  = make_numeric(y_train_unseen,  1)
-y_train_unseen2 = make_numeric(y_train_unseen2, 2)
-y_train_unseen3 = make_numeric(y_train_unseen3, 3)
-y_train_unseen4 = make_numeric(y_train_unseen4, 4)
-y_train_unseen5 = make_numeric(y_train_unseen5, 5)
+# y_train_seen    = make_numeric(y_train_seen,    0)
+# y_train_unseen  = make_numeric(y_train_unseen,  1)
+# y_train_unseen2 = make_numeric(y_train_unseen2, 2)
+# y_train_unseen3 = make_numeric(y_train_unseen3, 3)
+# y_train_unseen4 = make_numeric(y_train_unseen4, 4)
+# y_train_unseen5 = make_numeric(y_train_unseen5, 5)
 
 
 x_train_mix = combine_data(x_train_seen, x_train_unseen, x_train_unseen2,
@@ -186,12 +192,12 @@ scatter_plot(pred=pred_unseen, y_data=y_train_unseen, x_data=x_train_unseen,
 
 img_shape = [40, 40]
 
-plot_reconstructions(model=MODEL, x_test=x_train_mix, img_shape=img_shape, title='mix')
-plot_reconstructions(model=MODEL, x_test=x_train_unseen, img_shape=img_shape, title='unseen')
-plot_reconstructions(model=MODEL, x_test=x_train_seen, img_shape=img_shape, title='seen')
+plot_reconstructions(model=MODEL, x_test=x_train_mix, img_shape=img_shape, title='mix', n=6)
+plot_reconstructions(model=MODEL, x_test=x_train_unseen, img_shape=img_shape, title='unseen',n=6)
+plot_reconstructions(model=MODEL, x_test=x_train_seen, img_shape=img_shape, title='seen',n=6)
 
 seen_RE = MODEL.model.evaluate(x_train_seen, x_train_seen, batch_size=16)
-unseen_RE =  MODEL.model.evaluate(x_train_unseen2, x_train_unseen2, batch_size=16)
+unseen_RE =  MODEL.model.evaluate(x_train_unseen, x_train_unseen, batch_size=16)
 
 
 plt.figure(figsize=(6, 6))

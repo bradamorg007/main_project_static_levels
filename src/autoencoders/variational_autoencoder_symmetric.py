@@ -123,17 +123,14 @@ class VaritationalAutoEncoderSymmetric(AutoEncoder):
 
 
 if __name__ == "__main__":
+    skip_files = ['level_1', 'level_2',
+                  'level_3', 'level_4', 'level_5']
 
+    VAE = VaritationalAutoEncoderSymmetric(img_shape=(40, 40, 1), latent_dimensions=3, batch_size=1)
+    VAE.data_prep_simple(directory_path='../AE_data/test/', skip_files=skip_files)
 
-    VAE = VaritationalAutoEncoderSymmetric(img_shape=(40, 40, 1), latent_dimensions=3, batch_size=64)
-    VAE.data_prep(directory_path='../AE_data/data_1_static/', skip_files=['.json'], data_index=0, label_index=1,
-                  normalize=True, remove_blanks=True, data_type='train')
-
-    #VAE.filter(keep_labels=['seen-', 'unseen-'], data_type='train')
-
-    VAE.map_labels_to_codes()
-    VAE.show_label_codes()
+    VAE.y_train = [0]
     VAE.define_model()
-    VAE.train(epochs=20)
-    VAE.inspect_model()
-    VAE.save(name='VAE_SYM2-1', save_type='weights_and_reconstruction_error')
+    VAE.train(epochs=1000)
+    VAE.inspect_model(n=1, dim_reduction_model='pca')
+    VAE.save(name='VAE1', save_type='weights_and_reconstruction_error')
