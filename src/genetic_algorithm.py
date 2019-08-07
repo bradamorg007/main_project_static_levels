@@ -120,7 +120,7 @@ class GenticAlgorithm:
         child = Agent(initEmpty=True,
                       xPos=AMD[2], yPos=AMD[3], xPos_range=AMD[4], yPos_range=AMD[5],
                       vertical_fuel_depletion_rate=AMD[0],
-                      horizontal_fuel_depletion_rate=AMD[1], color=parentA.color, name=parentA.name)
+                      horizontal_fuel_depletion_rate=AMD[1], color=parentA.color)
         child.functional_system.name = parentA.functional_system.name
 
 

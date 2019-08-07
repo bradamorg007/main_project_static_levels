@@ -263,9 +263,9 @@ def main():
 
                                 elif memory is None and action == 'adaption_using_low_memory_and_random_init_foundation':
                                     MODE = 'adapt'
-                                    agents.adaptive_rand_population_init(mode=MODE, population_size=400,
+                                    agents.adaptive_rand_population_init(mode=MODE, rand_init_population_size=400,
                                                                          rand_to_current_model_split=(1.0, 0.0),
-                                                                         rand_model_mutation_rate=0.0,
+                                                                         rand_init_mutation_rate=0.0,
                                                                          current_model_mutation_rate=0.99) # leave one model the current one unchanges
                                     print('WHERRRRR')
                         else:

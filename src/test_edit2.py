@@ -162,17 +162,16 @@ def main():
     SIM_SPEED = 1
     save_first_winner = False
     level_to_save = 0
-    generation_limit = 20
+    generation_limit = 10
 
 
-    level1 = build_blueprint([400, 450, 580, 100, BLACK], multipliers=4, xPos_interval=50)
-    level2 = build_blueprint([400, 400, 520, 100, BLACK], multipliers=4, xPos_interval=50)
-    level3 = build_blueprint([400, 350, 480, 100, BLACK], multipliers=4, xPos_interval=50)
-    level4 = build_blueprint([400, 250, 380, 100, BLACK], multipliers=4, xPos_interval=10)
-    level5 = build_blueprint([400, 150, 280, 100, BLACK], multipliers=4, xPos_interval=50)
-    level6 = build_blueprint([400, 50,  180, 100, BLACK], multipliers=4, xPos_interval=50)
+    level1 = build_blueprint([400, 500, 600, 100, BLACK], multipliers=4, xPos_interval=50)
+    level2 = build_blueprint([400, 480, 580, 100, BLACK], multipliers=4, xPos_interval=50)
+    level3 = build_blueprint([400, 350, 450, 100, BLACK], multipliers=4, xPos_interval=50)
+    level4 = build_blueprint([400, 330, 430, 100, BLACK], multipliers=4, xPos_interval=50)
+    level5 = build_blueprint([400, 250, 350, 100, BLACK], multipliers=4, xPos_interval=50)
 
-    levels = Block.generate(SCREEN_WIDTH, SCREEN_HEIGHT, 100, level1, level3, level1, level4, level3, level6, level2, level5)
+    levels = Block.generate(SCREEN_WIDTH, SCREEN_HEIGHT, 100, level1, level2, level1, level3, level2, level4, level5)
     #levels = Block.generate(SCREEN_WIDTH, SCREEN_HEIGHT, 100, level1)
 
     agents = AgentManager( mode=MODE,
@@ -185,6 +184,13 @@ def main():
                            vertical_fuel_depletion_rate=0.0005,
                            horizontal_fuel_depletion_rate=0.0005,
                            screen_width=SCREEN_WIDTH,
+                           rand_init_population_size=300,
+                           rand_init_mutation_rate=0.0,
+                           med_sim_init_population_size=300,
+                           med_sim_init_rand_agent_percenatge=0.2,
+                           med_sim_init_med_memory_agent_percenatge=0.8,
+                           med_sim_init_rand_mutation_rate=0.0,
+                           med_sim_init_med_mutation_rate=0.5,
                            load_agent_filepath='sim_data/default_best'
                          )
 
@@ -192,14 +198,14 @@ def main():
                                       latent_dims=3,
                                       RE_delta=0.0,
                                       model_folder='CNND',
-                                      start=6,
+                                      start=1,
                                       MODE=MODE,
                                       preview_output=False
                                      )
 
     memory_system = MemorySystem.init(MODE=MODE,
-                                      high_simularity_threshold=1.0e-16,
-                                      low_simularity_threshold=1.5e-08,
+                                      high_simularity_threshold=5.0e-05,
+                                      low_simularity_threshold=6.0e-05,
                                       forget_usage_threshold=0,
                                       forget_age_threshold=50,
                                       max_memory_size=50
@@ -209,12 +215,13 @@ def main():
 
     generation_count = 0
     change_level_flag = False
-    adaption_complete_flag = False
     winners = []
     latent_representation = []
     is_familiar = None
     init_first_original_memory = True
+    memory = None
 
+    event_flag = False
     done = False
     frame_count = 0
     while not done:
@@ -234,6 +241,15 @@ def main():
 
                 elif event.key == pygame.K_s and MODE == 'train':
                    agents.save_best_agent()
+
+                elif event.key == pygame.K_SPACE:
+                    pause = True
+                    while pause == True:
+                        for event in pygame.event.get():
+                            if event.type == pygame.KEYDOWN:
+                                if event.key == pygame.K_SPACE:
+                                    pause = False
+
 
 
         for i in range(SIM_SPEED):
@@ -256,6 +272,7 @@ def main():
                                                         tag='mem_level' + str(current_level_no))
                             init_first_original_memory = False
                             visual_system.supress = True
+                            event_flag = True
 
                         if visual_system.supress==False and is_familiar is not None:
                             # get latent representation from vs
@@ -264,25 +281,26 @@ def main():
 
                             if memory is not None and action == 'memory_to_fs_system_switch':
                                 agents.temp_agent_store.append(agent)
-                                agents.reset_temp_agent_store(memory.get('solution'))
+                                agent = agents.reset_temp_agent_store(memory.get('solution'))
                                 visual_system.supress = True
                                 print(action)
-                            elif memory is None and action == 'adaption_using_medium_memory_as_init_foundation':
-                                a = 1
 
-                            elif memory is None and action == 'adaption_using_low_memory_and_random_init_foundation':
+                            elif memory is not None and action == 'adaption_using_medium_memory_as_init_foundation':
                                 MODE = 'adapt'
-                                agents.adaptive_rand_population_init(mode=MODE, population_size=400,
-                                                                     rand_to_current_model_split=(1.0, 0.0),
-                                                                     rand_model_mutation_rate=0.0,
-                                                                     current_model_mutation_rate=0.99) # leave one model the current one unchanges
+                                agents.adaptive_med_sim_population_init(MODE, memory)
+                                print(action)
 
 
+                            elif action == 'adaption_using_low_memory_and_random_init_foundation':
+                                MODE = 'adapt'
+                                agents.adaptive_rand_population_init(MODE) # leave one model the current one unchanges
+                                print(action)
+
+                            event_flag = True
 
 
 
                      #   print('visual system is frame familiar: %s' % is_familiar)
-
 
 
                     agent.think(current_level, SCREEN_WIDTH, SCREEN_HEIGHT)
@@ -306,7 +324,6 @@ def main():
                             agent.rect.y = agents.starting_yPos
                             agent.velocity_x = 0
                             agent.velocity_y = 0
-                            agent.name = 'winner' + str(i)
                             winners.append(agent)
                             agents.splice(i, mode='delete')
                             i -= 1
@@ -320,7 +337,6 @@ def main():
                             agent.rect.y = agents.starting_yPos
                             agent.velocity_x = 0
                             agent.velocity_y = 0
-                            agent.name = 'winner' + str(i)
                             winners.append(agent)
                             agents.splice(i, mode='delete')
                             i -= 1
@@ -357,9 +373,8 @@ def main():
                         winners = []
                         agents.dead_agents = []
                         MODE = 'test'
-                        print('ADAPTION COMPLETE: USING NEW SOLUTION')
 
-
+                        print('ADAPTION COMPLETE: SOLUTION: %s' % (solution.functional_system.name))
 
 
 
@@ -375,21 +390,19 @@ def main():
                         agents.update_arrays(input=new_population)
                         raise ValueError('AGENT DEATH DURING TEST MODE: MEMORY WAS INEFFECTIVE')
 
-
                     else:
-
 
                         if MODE == 'adapt' and generation_count >= generation_limit:
 
                             if memory_system.current_action == 'adaption_using_medium_memory_as_init_foundation':
-                                a = 1
+                                MODE = 'adapt'
+                                agents.dead_agents = []
+                                agents.adaptive_med_sim_population_init(MODE, memory)
 
                             elif memory_system.current_action == 'adaption_using_low_memory_and_random_init_foundation':
                                 MODE = 'adapt'
-                                agents.adaptive_rand_population_init(mode=MODE, population_size=400,
-                                                                     rand_to_current_model_split=(1.0, 0.0),
-                                                                     rand_model_mutation_rate=0.0,
-                                                                     current_model_mutation_rate=0.99)  # leave one model the current one unchanges
+                                agents.dead_agents = []
+                                agents.adaptive_rand_population_init(MODE)  # leave one model the current one unchanges
                             skip_ga = True
                             generation_count = 0
                             print('MODEL LOST IN BAD THOUGHT POOL: RE-INIT GA PROCESSING')
@@ -440,11 +453,32 @@ def main():
         if change_level_flag:
             change_level_flag = False
 
-        if MODE == 'adapt':
-            print('Mode: %s is familiar: %s model in use: %s ' % (MODE, is_familiar, 'Finding solution'))
+        if event_flag:
 
-        elif MODE == 'test':
-            print('Mode: %s is familiar: %s model in use: %s ' % (MODE, is_familiar, agents.not_sprites[0].functional_system.name))
+            if memory is None:
+                sim_score = 'N/A'
+            else:
+
+                if isinstance(memory, list):
+                    min = memory[0].get('similarity_score')
+
+                    for item in memory:
+                        sim = item.get('similarity_score')
+                        if sim < min:
+                            min = sim
+                    sim_score = 'minimum = ' + str(min)
+
+                else:
+                    sim_score =  memory.get('similarity_score')
+
+            if MODE == 'adapt':
+                print('Mode: %s is familiar: %s model in use: %s similarity: %s' % (MODE, is_familiar, 'Finding solution', sim_score))
+
+            elif MODE == 'test':
+                print('Mode: %s is familiar: %s model in use: %s Similarity: %s' % (MODE, is_familiar, agents.not_sprites[0].functional_system.name,
+                                                                                   sim_score))
+
+            event_flag = False
 
     pygame.quit()
     print('SIMULATION LEVEL COMPLETED BY AGENT')

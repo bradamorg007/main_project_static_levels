@@ -89,7 +89,7 @@ if __name__ == '__main__':
                   'level_3', 'level_4', 'level_5']
 
     CNND = CNN_DenseLatentSpace(img_shape=(40, 40, 1), latent_dimensions=3, batch_size=1)
-    CNND.data_prep_simple(directory_path='../AE_data/test/', skip_files=skip_files)
+    CNND.data_prep_simple(directory_path='../AE_data/test/', skip_files=[])
 
     CNND.y_train = [0]
     CNND.define_model()

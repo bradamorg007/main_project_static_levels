@@ -2,33 +2,30 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d20b0274-9a6e-4c82-a8e1-8bdb6acd3290" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/AE_data/adaption_system.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/genetic_algorithm.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/level.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/old_code/Random.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/old_code/agent.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/old_code/agent_manager.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/old_code/block.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/test.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/test_edit.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/test_edit2.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GA.py" beforeDir="false" afterPath="$PROJECT_DIR$/old_code/GA.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PLAN.md" beforeDir="false" afterPath="$PROJECT_DIR$/old_code/PLAN.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Random.py" beforeDir="false" afterPath="$PROJECT_DIR$/Random.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/agent.py" beforeDir="false" afterPath="$PROJECT_DIR$/agent.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/AE_data/test/level_0" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AE_data/test/level_1" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AE_data/test/level_2" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AE_data/test/level_3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AE_data/test/level_4" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AE_data/test/level_5" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/agent_manager.py" beforeDir="false" afterPath="$PROJECT_DIR$/agent_manager.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/autoencoders/AE_LAB.py" beforeDir="false" afterPath="$PROJECT_DIR$/autoencoders/AE_LAB.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/autoencoders/autoencoder_template.py" beforeDir="false" afterPath="$PROJECT_DIR$/autoencoders/autoencoder_template.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/autoencoders/cnn_with_dense_lts.py" beforeDir="false" afterPath="$PROJECT_DIR$/autoencoders/cnn_with_dense_lts.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/autoencoders/models/CNND/reconstruction_error.pkl" beforeDir="false" afterPath="$PROJECT_DIR$/autoencoders/models/CNND/reconstruction_error.pkl" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/autoencoders/models/CNND/weights_decoder_model.h5" beforeDir="false" afterPath="$PROJECT_DIR$/autoencoders/models/CNND/weights_decoder_model.h5" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/autoencoders/models/CNND/weights_encoder_model.h5" beforeDir="false" afterPath="$PROJECT_DIR$/autoencoders/models/CNND/weights_encoder_model.h5" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/autoencoders/models/CNND/weights_model.h5" beforeDir="false" afterPath="$PROJECT_DIR$/autoencoders/models/CNND/weights_model.h5" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/autoencoders/models/VAE1/reconstruction_error.pkl" beforeDir="false" afterPath="$PROJECT_DIR$/autoencoders/models/VAE1/reconstruction_error.pkl" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/autoencoders/models/VAE1/weights_decoder_model.h5" beforeDir="false" afterPath="$PROJECT_DIR$/autoencoders/models/VAE1/weights_decoder_model.h5" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/autoencoders/models/VAE1/weights_encoder_model.h5" beforeDir="false" afterPath="$PROJECT_DIR$/autoencoders/models/VAE1/weights_encoder_model.h5" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/autoencoders/models/VAE1/weights_model.h5" beforeDir="false" afterPath="$PROJECT_DIR$/autoencoders/models/VAE1/weights_model.h5" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/autoencoders/variational_autoencoder_symmetric.py" beforeDir="false" afterPath="$PROJECT_DIR$/autoencoders/variational_autoencoder_symmetric.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/block.py" beforeDir="false" afterPath="$PROJECT_DIR$/block.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/file_extractor.py" beforeDir="false" afterPath="$PROJECT_DIR$/old_code/file_extractor.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/image_capture.py" beforeDir="false" afterPath="$PROJECT_DIR$/old_code/image_capture.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/level_manager.py" beforeDir="false" afterPath="$PROJECT_DIR$/old_code/level_manager.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/genetic_algorithm.py" beforeDir="false" afterPath="$PROJECT_DIR$/genetic_algorithm.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/memory_system.py" beforeDir="false" afterPath="$PROJECT_DIR$/memory_system.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/neuroevolution.py" beforeDir="false" afterPath="$PROJECT_DIR$/old_code/neuroevolution.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/nn.py" beforeDir="false" afterPath="$PROJECT_DIR$/nn.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/simulation.py" beforeDir="false" afterPath="$PROJECT_DIR$/old_code/simulation.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sim_data/default_best" beforeDir="false" afterPath="$PROJECT_DIR$/sim_data/default_best" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test_edit.py" beforeDir="false" afterPath="$PROJECT_DIR$/test_edit.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test_edit2.py" beforeDir="false" afterPath="$PROJECT_DIR$/test_edit2.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/visual_system.py" beforeDir="false" afterPath="$PROJECT_DIR$/visual_system.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -42,8 +39,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/genetic_algorithm.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1685">
-              <caret line="170" column="53" selection-start-line="170" selection-start-column="53" selection-end-line="170" selection-end-column="53" />
+            <state relative-caret-position="2214">
+              <caret line="126" selection-start-line="126" selection-end-line="126" />
               <folding>
                 <element signature="e#0#11#0" expanded="true" />
               </folding>
@@ -54,8 +51,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/test_edit2.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="233">
-              <caret line="174" column="124" selection-start-line="174" selection-start-column="124" selection-end-line="174" selection-end-column="124" />
+            <state relative-caret-position="-114">
+              <caret line="394" column="63" selection-start-line="394" selection-start-column="47" selection-end-line="394" selection-end-column="63" />
               <folding>
                 <element signature="e#0#13#0" expanded="true" />
                 <element signature="e#557#1121#0" />
@@ -73,8 +70,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/visual_system.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="180">
-              <caret line="37" lean-forward="true" selection-start-line="37" selection-end-line="37" />
+            <state relative-caret-position="558">
+              <caret line="36" column="24" selection-start-line="36" selection-start-column="24" selection-end-line="36" selection-end-column="24" />
               <folding>
                 <element signature="e#0#9#0" expanded="true" />
               </folding>
@@ -85,8 +82,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/agent.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1037">
-              <caret line="92" column="12" selection-start-line="92" selection-start-column="12" selection-end-line="92" selection-end-column="12" />
+            <state relative-caret-position="2232">
+              <caret line="126" selection-start-line="126" selection-end-line="126" />
               <folding>
                 <element signature="e#0#13#0" expanded="true" />
               </folding>
@@ -95,10 +92,22 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/nn.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="990">
+              <caret line="60" column="32" selection-start-line="60" selection-start-column="32" selection-end-line="60" selection-end-column="32" />
+              <folding>
+                <element signature="e#0#18#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/memory_system.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="175">
-              <caret line="71" selection-start-line="71" selection-end-line="71" />
+            <state relative-caret-position="1908">
+              <caret line="107" column="60" selection-start-line="107" selection-start-column="60" selection-end-line="107" selection-end-column="60" />
               <folding>
                 <element signature="e#1#19#0" expanded="true" />
               </folding>
@@ -109,10 +118,22 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/agent_manager.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="103">
-              <caret line="104" selection-start-line="104" selection-end-line="104" />
+            <state relative-caret-position="1836">
+              <caret line="107" selection-start-line="107" selection-end-line="107" />
               <folding>
                 <element signature="e#0#13#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/autoencoders/cnn_with_dense_lts.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1512">
+              <caret line="91" column="73" selection-start-line="91" selection-start-column="73" selection-end-line="91" selection-end-column="73" />
+              <folding>
+                <element signature="e#0#18#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -132,6 +153,7 @@
       <find>offsc</find>
       <find>off</find>
       <find>current_closest_block</find>
+      <find>generation_count</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -153,28 +175,18 @@
         <option value="$PROJECT_DIR$/old_code/file_extractor.py" />
         <option value="$PROJECT_DIR$/autoencoders/autoencoder_template.py" />
         <option value="$PROJECT_DIR$/old_code/simulation.py" />
-        <option value="$PROJECT_DIR$/autoencoders/cnn_with_dense_lts.py" />
-        <option value="$PROJECT_DIR$/autoencoders/variational_autoencoder_symmetric.py" />
         <option value="$PROJECT_DIR$/autoencoders/AE_LAB.py" />
         <option value="$PROJECT_DIR$/AE_data/adaption_system.py" />
-        <option value="$PROJECT_DIR$/genetic_algorithm.py" />
         <option value="$PROJECT_DIR$/nn.py" />
         <option value="$PROJECT_DIR$/agent.py" />
         <option value="$PROJECT_DIR$/test_edit.py" />
-        <option value="$PROJECT_DIR$/visual_system.py" />
+        <option value="$PROJECT_DIR$/autoencoders/variational_autoencoder_symmetric.py" />
+        <option value="$PROJECT_DIR$/autoencoders/cnn_with_dense_lts.py" />
         <option value="$PROJECT_DIR$/memory_system.py" />
+        <option value="$PROJECT_DIR$/visual_system.py" />
+        <option value="$PROJECT_DIR$/genetic_algorithm.py" />
         <option value="$PROJECT_DIR$/agent_manager.py" />
         <option value="$PROJECT_DIR$/test_edit2.py" />
-      </list>
-    </option>
-  </component>
-  <component name="ProjectConfigurationFiles">
-    <option name="files">
-      <list>
-        <option value="$PROJECT_DIR$/.idea/src.iml" />
-        <option value="$PROJECT_DIR$/.idea/vcs.xml" />
-        <option value="$PROJECT_DIR$/.idea/modules.xml" />
-        <option value="$PROJECT_DIR$/.idea/misc.xml" />
       </list>
     </option>
   </component>
@@ -197,6 +209,11 @@
               <item name="src" type="b2602c69:ProjectViewProjectNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="src" type="b2602c69:ProjectViewProjectNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="AE_data" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
@@ -204,6 +221,7 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
@@ -334,10 +352,10 @@
     <recent_temporary>
       <list>
         <item itemvalue="Python.test_edit2" />
-        <item itemvalue="Python.test_edit" />
-        <item itemvalue="Python.AE_LAB" />
         <item itemvalue="Python.cnn_with_dense_lts" />
         <item itemvalue="Python.variational_autoencoder_symmetric" />
+        <item itemvalue="Python.test_edit" />
+        <item itemvalue="Python.AE_LAB" />
       </list>
     </recent_temporary>
   </component>
@@ -358,13 +376,13 @@
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.14531043" />
+      <window_info content_ui="combo" id="Project" order="0" weight="0.295302" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32956153" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.30975956" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.4950495" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.4115983" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.42149928" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
@@ -395,42 +413,6 @@
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
     </layout-to-restore>
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/old_code/GA.py</url>
-          <line>64</line>
-          <option name="timeStamp" value="14" />
-        </line-breakpoint>
-        <line-breakpoint suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/autoencoders/autoencoder_template.py</url>
-          <line>297</line>
-          <option name="timeStamp" value="26" />
-        </line-breakpoint>
-        <line-breakpoint suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/autoencoders/AE_LAB.py</url>
-          <line>183</line>
-          <option name="timeStamp" value="30" />
-        </line-breakpoint>
-        <line-breakpoint suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/test_edit.py</url>
-          <line>362</line>
-          <option name="timeStamp" value="87" />
-        </line-breakpoint>
-        <line-breakpoint suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/test_edit.py</url>
-          <line>344</line>
-          <option name="timeStamp" value="89" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/test_edit2.py</url>
-          <line>388</line>
-          <option name="timeStamp" value="105" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
   <component name="debuggerHistoryManager">
     <expressions id="evaluateExpression">
@@ -513,13 +495,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/autoencoders/variational_autoencoder_symmetric.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="299">
-          <caret line="134" column="25" selection-start-line="134" selection-start-column="25" selection-end-line="134" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/autoencoders/autoencoder_template.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-286">
@@ -595,36 +570,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/autoencoders/cnn_with_dense_lts.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1602">
-          <caret line="96" selection-start-line="96" selection-end-line="96" />
-          <folding>
-            <element signature="e#0#18#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/nn.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="432">
-          <caret line="60" column="32" selection-start-line="60" selection-start-column="32" selection-end-line="60" selection-end-column="32" />
-          <folding>
-            <element signature="e#0#18#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/agent.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1037">
-          <caret line="92" column="12" selection-start-line="92" selection-start-column="12" selection-end-line="92" selection-end-column="12" />
-          <folding>
-            <element signature="e#0#13#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/test_edit.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="324">
@@ -632,50 +577,101 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/visual_system.py">
+    <entry file="file://$PROJECT_DIR$/autoencoders/variational_autoencoder_symmetric.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="37" lean-forward="true" selection-start-line="37" selection-end-line="37" />
-          <folding>
-            <element signature="e#0#9#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="224">
+          <caret line="129" column="72" selection-start-line="129" selection-start-column="72" selection-end-line="129" selection-end-column="72" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/memory_system.py">
+    <entry file="file://$USER_HOME$/Anaconda3/envs/main_project_tf_gpu/Lib/site-packages/tensorflow/python/client/session.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="175">
-          <caret line="71" selection-start-line="71" selection-end-line="71" />
-          <folding>
-            <element signature="e#1#19#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="154">
+          <caret line="685" selection-start-line="685" selection-end-line="685" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$APPLICATION_HOME_DIR$/helpers/pydev/pydevd.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="128">
+          <caret line="1146" selection-start-line="1146" selection-end-line="1146" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/genetic_algorithm.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1685">
-          <caret line="170" column="53" selection-start-line="170" selection-start-column="53" selection-end-line="170" selection-end-column="53" />
+        <state relative-caret-position="2214">
+          <caret line="126" selection-start-line="126" selection-end-line="126" />
           <folding>
             <element signature="e#0#11#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/agent_manager.py">
+    <entry file="file://$PROJECT_DIR$/visual_system.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="103">
-          <caret line="104" selection-start-line="104" selection-end-line="104" />
+        <state relative-caret-position="558">
+          <caret line="36" column="24" selection-start-line="36" selection-start-column="24" selection-end-line="36" selection-end-column="24" />
+          <folding>
+            <element signature="e#0#9#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/agent.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2232">
+          <caret line="126" selection-start-line="126" selection-end-line="126" />
           <folding>
             <element signature="e#0#13#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/nn.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="990">
+          <caret line="60" column="32" selection-start-line="60" selection-start-column="32" selection-end-line="60" selection-end-column="32" />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/memory_system.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1908">
+          <caret line="107" column="60" selection-start-line="107" selection-start-column="60" selection-end-line="107" selection-end-column="60" />
+          <folding>
+            <element signature="e#1#19#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/agent_manager.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1836">
+          <caret line="107" selection-start-line="107" selection-end-line="107" />
+          <folding>
+            <element signature="e#0#13#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/autoencoders/cnn_with_dense_lts.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1512">
+          <caret line="91" column="73" selection-start-line="91" selection-start-column="73" selection-end-line="91" selection-end-column="73" />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/test_edit2.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="233">
-          <caret line="174" column="124" selection-start-line="174" selection-start-column="124" selection-end-line="174" selection-end-column="124" />
+        <state relative-caret-position="-114">
+          <caret line="394" column="63" selection-start-line="394" selection-start-column="47" selection-end-line="394" selection-end-column="63" />
           <folding>
             <element signature="e#0#13#0" expanded="true" />
             <element signature="e#557#1121#0" />

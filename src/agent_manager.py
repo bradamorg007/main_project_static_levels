@@ -3,12 +3,17 @@ from agent import Agent
 import pickle as pkl
 import numpy as np
 import os
+import copy
 
 class AgentManager:
     def __init__(self, population_size, screen_height, screen_width,
                  mode,  vertical_fuel_depletion_rate=0.05, horizontal_fuel_depletion_rate=0.05,
                  starting_xPos=20, starting_yPos=100,xPos_range=None, yPos_range=None,
-                 save_path='default_best', load_agent_filepath=None):
+                 save_path='default_best', rand_init_population_size=400, rand_init_mutation_rate=0.0,
+                 med_sim_init_population_size=400,
+                 med_sim_init_rand_agent_percenatge=0.5, med_sim_init_med_memory_agent_percenatge=0.25,
+                 med_sim_init_rand_mutation_rate=0.5,med_sim_init_med_mutation_rate=0.5,
+                 load_agent_filepath=None):
 
         self.vertical_fuel_depletion_rate = vertical_fuel_depletion_rate
         self.horizontal_fuel_depletion_rate = horizontal_fuel_depletion_rate
@@ -24,6 +29,14 @@ class AgentManager:
         self.dead_agents = []
         load_flag = False
 
+        self.rand_init_population_size = rand_init_population_size
+        self.rand_init_mutation_rate = rand_init_mutation_rate
+
+        self.med_sim_init_population_size = med_sim_init_population_size
+        self.med_sim_init_rand_agent_percenatge = med_sim_init_rand_agent_percenatge
+        self.med_sim_init_med_memory_agent_percenatge = med_sim_init_med_memory_agent_percenatge
+        self.med_sim_init_rand_mutation_rate = med_sim_init_rand_mutation_rate
+        self.med_sim_init_med_mutation_rate = med_sim_init_med_mutation_rate
 
         for i in range(population_size):
 
@@ -66,6 +79,7 @@ class AgentManager:
             self.temp_agent_store[0].functional_system = functional_system
             self.not_sprites = self.temp_agent_store
             self.temp_agent_store = []
+            return self.not_sprites[0]
 
 
     def restore_original_test_agent(self):
@@ -89,45 +103,77 @@ class AgentManager:
 
 
 
-    def adaptive_rand_population_init(self, mode, population_size, rand_to_current_model_split=(0.5,0.5),
-                                      rand_model_mutation_rate=0.1, current_model_mutation_rate=0.1):
+    def adaptive_rand_population_init(self, mode):
 
         current_model_template = self.store_test_agent_progress(mode)
         xPos = current_model_template.rect.x
         yPos = current_model_template.rect.y
-        current_agent_functional_system = current_model_template.functional_system
         self.not_sprites = []
 
-        rand_model_amount = int(np.round(population_size * rand_to_current_model_split[0]))
-        current_model_amount = int(np.round(population_size * rand_to_current_model_split[1]))
-
-        for i in range(rand_model_amount):
+        for i in range(self.rand_init_population_size):
             agent = Agent(
                 vertical_fuel_depletion_rate=self.vertical_fuel_depletion_rate,
                 horizontal_fuel_depletion_rate=self.horizontal_fuel_depletion_rate,
                 xPos=xPos, yPos=yPos, xPos_range=None,
                 yPos_range=None,
-                initEmpty=False, name='adapted_network'+str(i), color=(0, 255, 255, 100)
+                initEmpty=False, name='rand_adapted_network'+str(i), color=(0, 255, 255, 100)
             )
-            agent.functional_system.name = 'adapted_network'+str(i)
+            agent.functional_system.name = 'rand_adapted_network'+str(i)
 
-            agent.functional_system.mutate(rate=rand_model_mutation_rate)
+            agent.functional_system.mutate(rate=self.rand_init_mutation_rate)
             self.not_sprites.append(agent)
 
-        for i in range(current_model_amount):
+
+    def adaptive_med_sim_population_init(self, mode, memories):
+
+        current_model_template = self.store_test_agent_progress(mode)
+        xPos = current_model_template.rect.x
+        yPos = current_model_template.rect.y
+        self.not_sprites = []
+
+        rand_agent_population_size = int(np.round(self.med_sim_init_population_size * self.med_sim_init_rand_agent_percenatge))
+        med_memory_agent_population_size = int(np.round(self.med_sim_init_population_size * self.med_sim_init_med_memory_agent_percenatge))
+
+        index = 0
+        for i in range(rand_agent_population_size):
             agent = Agent(
                 vertical_fuel_depletion_rate=self.vertical_fuel_depletion_rate,
                 horizontal_fuel_depletion_rate=self.horizontal_fuel_depletion_rate,
                 xPos=xPos, yPos=yPos, xPos_range=None,
                 yPos_range=None,
-                initEmpty=False, name='adapted_network'+str(i), color=(0, 0, 255, 100)
+                initEmpty=False, color=(0, 255, 255, 100)
             )
-            agent.functional_system.name = 'adapted_network' + str(i)
-
-
-            agent.functional_system = current_agent_functional_system
-            agent.functional_system.mutate(rate=current_model_mutation_rate)
+            agent.functional_system.name = 'rand_adapted_network'+str(index)
+            agent.functional_system.mutate(rate=self.med_sim_init_rand_mutation_rate)
             self.not_sprites.append(agent)
+            index += 1
+
+
+        count = 0
+        for i in range(med_memory_agent_population_size):
+
+            if i > len(memories)-1:
+                count = 0
+
+            memory = memories[count]
+            #memory_functional_system = memory.get('solution')
+            # memory_functional_system.mutate(rate=self.med_sim_init_med_mutation_rate)
+            agent = Agent(
+                vertical_fuel_depletion_rate=self.vertical_fuel_depletion_rate,
+                horizontal_fuel_depletion_rate=self.horizontal_fuel_depletion_rate,
+                xPos=xPos, yPos=yPos, xPos_range=None,
+                yPos_range=None,
+                initEmpty=True, color=(0, 255, 255, 100)
+            )
+
+            agent.functional_system = copy.deepcopy(memory.get('solution'))
+            agent.functional_system.name = 'memory_adapted_network' + str(index)
+            agent.functional_system.mutate(self.med_sim_init_med_mutation_rate)
+            self.not_sprites.append(agent)
+            index += 1
+            count += 1
+
+
 
 
 

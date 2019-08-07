@@ -34,7 +34,7 @@ class VisualSystem:
 
     def process_image(self, surface, agents, frame_count, mask_agent=True, preview_images=False):
 
-        if self.start < frame_count:
+        if self.start <= frame_count:
 
             if mask_agent:
                 # remove agent from image
@@ -109,6 +109,8 @@ class VisualSystem:
         output2 = None
 
         if len(ls) == 2:
+            if len(output1.shape) == 2:
+                output1 = output1[0]
             output2 = ls[1]
 
         return output1, output2

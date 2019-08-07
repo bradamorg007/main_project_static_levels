@@ -45,6 +45,7 @@ class MemorySystem:
 
     def clean_up(self):
         self.highly_similarity_memories = []
+        self.medium_similarity_memories = []
         self.low_similarity_memories = []
 
     def query(self, current_latent_representation):
@@ -56,6 +57,7 @@ class MemorySystem:
 
             memory =  self.memories[i]
             memory_latent_representations = memory.get('latent_representation')
+
             simularity = self.euclidean_distance(current_latent_representation, memory_latent_representations)
 
             if simularity <= self.high_simularity_threshold:
@@ -97,7 +99,7 @@ class MemorySystem:
             self.current_action = action
 
         elif len(self.highly_similarity_memories) == 0 and len(self.medium_similarity_memories) > 0:
-            memory = None
+            memory = self.medium_similarity_memories
             action = 'adaption_using_medium_memory_as_init_foundation'
             self.current_action = action
 
