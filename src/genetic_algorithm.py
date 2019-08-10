@@ -44,7 +44,7 @@ class GenticAlgorithm:
 
         # FITNESS FUNCTION: uses power fo non_linear Fitness
         for i in range(len(population)):
-            population[i].fitness = math.pow(population[i].fitness, 2)
+            #population[i].fitness = math.pow(population[i].fitness, 4)
             population[i].computeFitness()
             fitnessSum = fitnessSum + population[i].fitness
 

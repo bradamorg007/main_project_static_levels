@@ -1,6 +1,7 @@
 import pygame
 import numpy as np
 from nn import NeuralNetwork
+import math
 
 
 class Agent(pygame.sprite.Sprite):
@@ -42,7 +43,7 @@ class Agent(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.x = xPos
         self.rect.y = yPos
-        self.previous_xPos = self.rect.center[0]
+        self.previous_xPos = self.rect.right
         self.starting_xPos = xPos
         self.starting_yPos = yPos
 
@@ -181,11 +182,11 @@ class Agent(pygame.sprite.Sprite):
         self.totalDistanceFromGapOverTime += agentDistanceFromGap
         self.timeSamplesExperianced += 1
 
-        if self.rect.center[0] > self.previous_xPos:
+        if self.rect.right > self.previous_xPos:
             # fitness only increses if the agent is moving to the right towards the goal
-            self.fitness = self.fitness + 1
+            self.fitness += 1
 
-        self.previous_xPos = self.rect.center[0]
+        self.previous_xPos = self.rect.right
 
 
     def fuel_depleted(self):
@@ -213,10 +214,11 @@ class Agent(pygame.sprite.Sprite):
 
     def computeFitness(self):
         # penalise agent based on average distance from gap
-
+        self.fitness = math.pow(self.fitness, 4)
         impactFactor = 0.5 # scales the percentage of penalisation applied
         self.avgDistFromGap = np.floor(self.totalDistanceFromGapOverTime / self.timeSamplesExperianced)
-        self.fitness = self.fitness - np.floor(impactFactor * self.avgDistFromGap)
+        fitness_penalty =np.floor(impactFactor * self.avgDistFromGap)
+        self.fitness -= fitness_penalty
         if self.fitness < 0:
             self.fitness = 0
 

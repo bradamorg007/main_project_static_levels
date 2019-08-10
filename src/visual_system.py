@@ -79,6 +79,8 @@ class VisualSystem:
     def is_familiar(self):
 
         if self.full_functionaility_enabled:
+            self.full_functionaility_enabled = False
+
             RE = self.model.model.evaluate(self.current_input_sample, self.current_input_sample, verbose=0)
 
             if RE > self.model.reconstruction_error + self.RE_delta:
@@ -99,6 +101,7 @@ class VisualSystem:
                 return False
             else:
                 return True
+
 
 
     def generate_latent_representation(self):

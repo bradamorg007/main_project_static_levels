@@ -33,7 +33,7 @@ class CNN_DenseLatentSpace(AutoEncoder):
         latent_vector = layers.Dense(units=self.latent_space_dims, name='Latent_space',
                                      activity_regularizer=layers.regularizers.l1(10e-5))(x)
         encoder = Model(input_img, latent_vector, name='Encoder')
-        encoder.summary()
+        #encoder.summary()
 
         # DECODER =========================================================================================
         decoder_inputs = layers.Input(shape=K.int_shape(latent_vector)[1:])
@@ -51,12 +51,12 @@ class CNN_DenseLatentSpace(AutoEncoder):
                                     activation='sigmoid', name='decoded_img')(d)
 
         decoder = Model(decoder_inputs, decoded_img, name='decoder_model')
-        decoder.summary()
+        #decoder.summary()
         z_decoded = decoder(latent_vector)
 
         AE = Model(input_img, z_decoded)
         AE.compile(optimizer='rmsprop', loss='binary_crossentropy')
-        AE.summary()
+        #AE.summary()
 
         encoder.compile(optimizer='rmsprop', loss='binary_crossentropy')
         decoder.compile(optimizer='rmsprop', loss='binary_crossentropy')
@@ -89,10 +89,10 @@ if __name__ == '__main__':
                   'level_3', 'level_4', 'level_5']
 
     CNND = CNN_DenseLatentSpace(img_shape=(40, 40, 1), latent_dimensions=3, batch_size=1)
-    CNND.data_prep_simple(directory_path='../AE_data/test/', skip_files=[])
+    CNND.data_prep_simple(directory_path='../AE_data/similarity_tests2/', skip_files=['level_1'])
 
     CNND.y_train = [0]
     CNND.define_model()
-    CNND.train(epochs=1000)
+    CNND.train(epochs=200)
     CNND.inspect_model(n=1, dim_reduction_model='pca')
-    CNND.save(name='CNND', save_type='weights_and_reconstruction_error')
+    CNND.save(name='CNND_sim_test', save_type='weights_and_reconstruction_error')
