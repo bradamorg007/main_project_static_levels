@@ -8,7 +8,7 @@ import numpy as np
 
 class VisualSystem:
 
-    def __init__(self, img_shape, latent_dims, RE_delta, model_folder, start=0, preview_output=False):
+    def __init__(self, img_shape, latent_dims, RE_delta, model_folder, start=0, preview_output=False, preview_topology=False):
 
         self.model_dir  = 'autoencoders/models/'
         self.model_folder = model_folder
@@ -21,7 +21,7 @@ class VisualSystem:
         self.full_functionaility_enabled = False
         self.model = CNN_DenseLatentSpace(img_shape=img_shape,
                                                       latent_dimensions=latent_dims,
-                                                      batch_size=1)
+                                                      batch_size=1, print_summary=preview_topology)
 
         self.model.load_weights(full_path=os.path.join(self.model_dir, self.model_folder))
 
@@ -120,11 +120,11 @@ class VisualSystem:
 
     @staticmethod
     def init(img_shape, latent_dims, RE_delta,
-                     model_folder, start, MODE,preview_output):
+                     model_folder, start, MODE,preview_output,preview_topology):
 
         if MODE == 'test':
            vs =  VisualSystem(img_shape, latent_dims, RE_delta,
-                         model_folder, start, preview_output=preview_output)
+                         model_folder, start, preview_output=preview_output, preview_topology=preview_topology)
 
            return vs
 

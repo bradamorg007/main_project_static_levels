@@ -59,6 +59,7 @@ class NeuralNetwork:
 
         self.CLASS_TAG = "nn.py"
         self.name = 'train_agent'
+        self.name = 'train_agent'
 
 
     def init_layers(self, init_type=None):

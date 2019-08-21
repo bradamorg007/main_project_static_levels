@@ -53,6 +53,7 @@ def merge(*args):
 
     for item in args:
 
+        item[-1][4] = (0,0,0)
         output = output + item
 
     return output
@@ -160,19 +161,59 @@ def main():
     """ Main Program """
     MODE = 'test'
     SIM_SPEED = 1
-    save_first_winner = False
+    save_first_winner = True
     level_to_save = 0
     generation_limit = 10
 
 
 
-    level1 = build_blueprint([400, 500, 600, 100, BLACK], multipliers=4, xPos_interval=50)
-    level2 = build_blueprint([400, 480, 580, 100, BLACK], multipliers=4, xPos_interval=50)
-    level3 = build_blueprint([400, 350, 450, 100, BLACK], multipliers=4, xPos_interval=50)
-    level4 = build_blueprint([400, 330, 430, 100, BLACK], multipliers=4, xPos_interval=50)
-    level5 = build_blueprint([400, 250, 350, 100, BLACK], multipliers=4, xPos_interval=50)
+    level1 = build_blueprint([280,  450, 550, 100, BLACK], multipliers=5, xPos_interval=50)
+    level2 = build_blueprint([280, 375, 475, 100, BLACK], multipliers=5, xPos_interval=50)
+    level3 = build_blueprint([280, 300, 400, 100, BLACK], multipliers=5, xPos_interval=50)
 
-    levels = Block.generate(SCREEN_WIDTH, SCREEN_HEIGHT, 100, level3, level4)
+    level7 = build_blueprint([280, 390, 490, 70, BLACK], multipliers=10, xPos_interval=50)
+    level8 = build_blueprint([280, 350, 480, 70, BLACK], multipliers=10, xPos_interval=50)
+    level2 = build_blueprint([280, 480, 580, 70, BLACK], multipliers=10, xPos_interval=50)
+    level3 = build_blueprint([280, 450, 550, 70, BLACK], multipliers=10, xPos_interval=50)
+
+    level4 = build_blueprint([900, 100, 300, 70, BLACK], multipliers=5, xPos_interval=50)
+    level4_1 = build_blueprint([280, 450, 550, 70, BLACK], multipliers=3, xPos_interval=50)
+    level4_12 = build_blueprint([650, 250, 530, 70, BLACK], multipliers=1, xPos_interval=50)
+    level4_13 = build_blueprint([780, 130, 470, 70, BLACK], multipliers=1, xPos_interval=50)
+    level4 = merge(level4_1, level4_12, level4_13,level4)
+
+    level1 = build_blueprint([900, 100, 300, 70, BLACK], multipliers=2, xPos_interval=50)
+    level1_0 = build_blueprint([1150, 200, 400, 70, BLACK], multipliers=1, xPos_interval=50)
+    level1_0_0 = build_blueprint([1290, 300, 500, 70, BLACK], multipliers=2, xPos_interval=50)
+    level1_1 = build_blueprint([280, 450, 550, 70, BLACK], multipliers=3, xPos_interval=50)
+    level1_12 = build_blueprint([650, 250, 530, 70, BLACK], multipliers=1, xPos_interval=50)
+    level1_13 = build_blueprint([780, 130, 470, 70, BLACK], multipliers=1, xPos_interval=50)
+    level1 = merge(level1_1, level1_12, level1_13,level1, level1_0, level1_0_0)
+
+    level0 = build_blueprint([900, 300, 500, 70, BLACK], multipliers=2, xPos_interval=50)
+    level0_0 = build_blueprint([1150, 400, 550, 70, BLACK], multipliers=1, xPos_interval=50)
+    level0_0_0 = build_blueprint([1290, 300, 550, 70, BLACK], multipliers=2, xPos_interval=50)
+    level0_1 = build_blueprint([280, 450, 550, 70, BLACK], multipliers=3, xPos_interval=50)
+    level0_12 = build_blueprint([650, 250, 530, 70, BLACK], multipliers=1, xPos_interval=50)
+    level0_13 = build_blueprint([780, 130, 470, 70, BLACK], multipliers=1, xPos_interval=50)
+    level0 = merge(level0_1, level0_12, level0_13,level0, level0_0, level0_0_0)
+
+    level6_0 = build_blueprint([1150, 400, 500, 70, BLACK], multipliers=1, xPos_interval=50)
+    level6_0_0 = build_blueprint([1260, 450, 550, 70, BLACK], multipliers=2, xPos_interval=50)
+    level6_1 = build_blueprint([280, 450, 550, 70, BLACK], multipliers=3, xPos_interval=50)
+    level6_12 = build_blueprint([650, 370, 530, 70, BLACK], multipliers=1, xPos_interval=50)
+    level6_13 = build_blueprint([780, 300, 500, 70, BLACK], multipliers=1, xPos_interval=50)
+    level6 = build_blueprint([900, 300, 500, 70, BLACK], multipliers=2, xPos_interval=50)
+    level6 = merge(level6_1, level6_12, level6_13,level6, level6_0, level6_0_0)
+
+    level5_1 = build_blueprint([280, 450, 550, 70, BLACK], multipliers=3, xPos_interval=50)
+    level5_12 = build_blueprint([650, 370, 530, 70, BLACK], multipliers=1, xPos_interval=50)
+    level5_13 = build_blueprint([780, 300, 500, 70, BLACK], multipliers=1, xPos_interval=50)
+    level5 = build_blueprint([900, 300, 500, 70, BLACK], multipliers=5, xPos_interval=50)
+    level5 = merge(level5_1, level5_12, level5_13,level5)
+
+
+    levels = Block.generate(SCREEN_WIDTH, SCREEN_HEIGHT, 100, False, level2, level3, level7, level8, level5, level4, level6, level1, level0)
     #levels = Block.generate(SCREEN_WIDTH, SCREEN_HEIGHT, 100, level1)
 
     agents = AgentManager( mode=MODE,
@@ -198,10 +239,11 @@ def main():
     visual_system = VisualSystem.init(img_shape=(40, 40, 1),
                                       latent_dims=3,
                                       RE_delta=0.0,
-                                      model_folder='CNND',
+                                      model_folder='CNND_main',
                                       start=1,
                                       MODE=MODE,
-                                      preview_output=False
+                                      preview_output=False,
+                                      preview_topology=True
                                      )
 
     memory_system = MemorySystem.init(MODE=MODE,
@@ -235,10 +277,10 @@ def main():
 
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_DOWN:
-                    SIM_SPEED -= 10
+                    SIM_SPEED -= 5
 
                 elif event.key == pygame.K_UP:
-                    SIM_SPEED += 10
+                    SIM_SPEED += 5
 
                 elif event.key == pygame.K_s and MODE == 'train':
                    agents.save_best_agent()
@@ -411,8 +453,6 @@ def main():
 
                     if skip_ga == False:
                         new_population = GenticAlgorithm.produceNextGeneration(population=agents.dead_agents,
-                                                                      screen_width=SCREEN_WIDTH,
-                                                                      screen_height=SCREEN_HEIGHT,
                                                                       agent_meta_data=agents.__dict__)
 
                         agents.update_arrays(new_population)
@@ -421,9 +461,9 @@ def main():
                         print('generation = %s population size = %s level no = %s / %s' % (
                             generation_count, len(new_population), current_level_no, len(levels)))
 
-                        if MODE != 'adapt':
-                            current_level_no = 0
-                            current_level = levels[current_level_no]
+                        # if MODE != 'adapt':
+                        #     current_level_no = 0
+                        #     current_level = levels[current_level_no]
 
 
 
@@ -442,7 +482,7 @@ def main():
 
         capture_success = capture(surface=screen, mode=MODE, remove_blank_frames=True,
                 level_number=current_level_no,
-                save_folder_path='similarity_tests', preview=True)
+                save_folder_path='building_test_level', preview=True)
 
         if MODE == 'capture' and capture_success:
             if current_level_no < len(levels) - 1:

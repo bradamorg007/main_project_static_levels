@@ -65,7 +65,7 @@ class Block():
     def hit(self, agent):
 
         if agent.rect.top  < self.top_block.rect.bottom or agent.rect.bottom > self.bottom_block.rect.top:
-            if (agent.rect.midright[0] > self.xPos) and agent.rect.midright[0] < self.xPos + self.width:
+            if agent.rect.right > self.bottom_block.rect.left and agent.rect.right < self.bottom_block.rect.right:
 
                 return True
 
@@ -89,9 +89,16 @@ class Block():
         draw_group.draw(surface)
 
     @staticmethod
-    def generate(screen_height, screen_width, max_gap_size=100, *args):
+    def generate(screen_height, screen_width, max_gap_size=100, split_first_args=False, *args):
 
         level_list = []
+
+        if split_first_args and len(args) == 1:
+            d = []
+            for item in args[0]:
+                d.append(item)
+
+            args = d
 
         for level in args:
             block_list = []

@@ -289,7 +289,7 @@ class AutoEncoder:
             print('SAVE WEIGHTS COMPLETE: Reconstrunction Error = %s' % RE)
 
 
-    def inspect_model(self, dim_reduction_model='tsne', dimensions=2, n=4, plot_rand=False):
+    def inspect_model(self, dim_reduction_model='tsne', dimensions=2, n=4, plot_rand=False, interval=1, labels=None):
         # PLOTTING & METRICS===================================================================================================
 
         # plot the latent space of the VAE
@@ -300,26 +300,34 @@ class AutoEncoder:
                             dimensions=dimensions)
 
         c = None
-        if self.label_keys_train is None:
+
+        if labels is not None:
+            c = labels
+        elif self.label_keys_train is None:
             c = len(self.y_train)
+
         else:
             c = len(self.label_keys_train)
+
 
         if pred.shape[1] == 2:
             plt.figure(figsize=(16, 10))
             sns.scatterplot(
                 x=pred[:, 0], y=pred[:, 1],
                 hue=self.y_train,
-                palette=sns.color_palette("hls", c),
+                s=80,
+                palette=sns.color_palette("Paired", c),
                 legend="full",
-                alpha=0.3
+
             )
+            plt.grid()
 
         elif pred.shape[1] == 3:
             fig = plt.figure(figsize=(6, 6))
             ax = Axes3D(fig)
             p = ax.scatter(pred[:, 0], pred[:, 1], pred[:, 2], c=self.y_train)
             fig.colorbar(p)
+            plt.grid()
             fig.show()
 
 
@@ -328,7 +336,7 @@ class AutoEncoder:
         if plot_rand:
             image_samples = np.random.randint(0, len(self.x_train), size=n)
         else:
-            image_samples = np.arange(n)
+            image_samples = np.arange(start=0,stop=len(self.y_train), step=interval)
         plt.figure(figsize=(20, 4))
 
         for i in range(n):

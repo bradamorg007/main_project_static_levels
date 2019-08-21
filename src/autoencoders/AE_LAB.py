@@ -123,41 +123,40 @@ def make_numeric(input, value):
 
 
 # Define Model to be tested
-MODEL = CNN_DenseLatentSpace(img_shape=(40, 40, 1), latent_dimensions=3, batch_size=128)
-MODEL.load_weights(full_path='models/CNND')
+MODEL = CNN_DenseLatentSpace(img_shape=(40, 40, 1), latent_dimensions=2, batch_size=128)
+MODEL.load_weights(full_path='models/CNND_sim_test2')
 
 
+file_dir = '../AE_data/test2/'
 # get data the model has trained on
-MODEL.data_prep_simple(directory_path='../AE_data/test/', skip_files=['level_1', 'level_2', 'level_3', 'level_4', 'level_5'])
+MODEL.data_prep_simple(directory_path=file_dir, skip_files=['level_1', 'level_2', 'level_3', 'level_4', 'level_5'])
 MODEL.y_train = [0]
 x_train_seen, y_train_seen = [MODEL.x_train, MODEL.y_train]
 
-#======================================================================================================================
-
 # get data the 
-MODEL.data_prep_simple(directory_path='../AE_data/test/', skip_files=['level_0','level_2', 'level_3', 'level_4', 'level_5'])
+MODEL.data_prep_simple(directory_path=file_dir, skip_files=['level_0', 'level_2', 'level_3', 'level_4', 'level_5'])
 MODEL.y_train = [1]
 x_train_unseen, y_train_unseen = [MODEL.x_train, MODEL.y_train]
 
 
-MODEL.data_prep_simple(directory_path='../AE_data/test/', skip_files=['level_0', 'level_1','level_3', 'level_4', 'level_5'])
+MODEL.data_prep_simple(directory_path=file_dir, skip_files=['level_0', 'level_1', 'level_3', 'level_4', 'level_5'])
 MODEL.y_train = [2]
 x_train_unseen2, y_train_unseen2 = [MODEL.x_train, MODEL.y_train]
 
 
-MODEL.data_prep_simple(directory_path='../AE_data/test/', skip_files=['level_0', 'level_1', 'level_2','level_4', 'level_5'])
+MODEL.data_prep_simple(directory_path=file_dir, skip_files=['level_0', 'level_1', 'level_2', 'level_4', 'level_5'])
 MODEL.y_train = [3]
 x_train_unseen3, y_train_unseen3 = [MODEL.x_train, MODEL.y_train]
 
 
-MODEL.data_prep_simple(directory_path='../AE_data/test/', skip_files=['level_0', 'level_1', 'level_2', 'level_3', 'level_5'])
+MODEL.data_prep_simple(directory_path=file_dir, skip_files=['level_0', 'level_1', 'level_2', 'level_3', 'level_5'])
 MODEL.y_train = [4]
 x_train_unseen4, y_train_unseen4 = [MODEL.x_train, MODEL.y_train]
 
 
-MODEL.data_prep_simple(directory_path='../AE_data/test/', skip_files=['level_0', 'level_1', 'level_2', 'level_3', 'level_4'])
-MODEL.y_train = [5]
-x_train_unseen5, y_train_unseen5 = [MODEL.x_train, MODEL.y_train]
+# MODEL.data_prep_simple(directory_path='../AE_data/test/', skip_files=['level_0', 'level_1', 'level_2', 'level_3', 'level_4'])
+# MODEL.y_train = [5]
+# x_train_unseen5, y_train_unseen5 = [MODEL.x_train, MODEL.y_train]
 
 
 
@@ -170,10 +169,10 @@ x_train_unseen5, y_train_unseen5 = [MODEL.x_train, MODEL.y_train]
 
 
 x_train_mix = combine_data(x_train_seen, x_train_unseen, x_train_unseen2,
-                           x_train_unseen3,x_train_unseen4, x_train_unseen5 )
+                           x_train_unseen3,x_train_unseen4,  )
 
 y_train_mix = combine_data(y_train_seen, y_train_unseen, y_train_unseen2,
-                           y_train_unseen3,y_train_unseen4, y_train_unseen5)
+                           y_train_unseen3,y_train_unseen4, )
 
 x_train_mix, y_train_mix = shuffle(x_train_mix, y_train_mix)
 
@@ -192,9 +191,9 @@ scatter_plot(pred=pred_unseen, y_data=y_train_unseen, x_data=x_train_unseen,
 
 img_shape = [40, 40]
 
-plot_reconstructions(model=MODEL, x_test=x_train_mix, img_shape=img_shape, title='mix', n=6)
-plot_reconstructions(model=MODEL, x_test=x_train_unseen, img_shape=img_shape, title='unseen',n=6)
-plot_reconstructions(model=MODEL, x_test=x_train_seen, img_shape=img_shape, title='seen',n=6)
+plot_reconstructions(model=MODEL, x_test=x_train_mix, img_shape=img_shape, title='mix', n=4)
+plot_reconstructions(model=MODEL, x_test=x_train_unseen, img_shape=img_shape, title='unseen',n=1)
+plot_reconstructions(model=MODEL, x_test=x_train_seen, img_shape=img_shape, title='seen',n=1)
 
 seen_RE = MODEL.model.evaluate(x_train_seen, x_train_seen, batch_size=16)
 unseen_RE =  MODEL.model.evaluate(x_train_unseen, x_train_unseen, batch_size=16)

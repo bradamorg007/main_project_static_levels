@@ -123,14 +123,49 @@ class VaritationalAutoEncoderSymmetric(AutoEncoder):
 
 
 if __name__ == "__main__":
+    # skip_files = ['level_1', 'level_2',
+    #               'level_3', 'level_4', 'level_5']
+    #
+    # VAE = VaritationalAutoEncoderSymmetric(img_shape=(40, 40, 1), latent_dimensions=3, batch_size=1)
+    # VAE.data_prep_simple(directory_path='../AE_data/test/', skip_files=[])
+    #
+    # VAE.y_train = [0]
+    # VAE.define_model()
+    # VAE.train(epochs=1000)
+    # VAE.inspect_model(n=1, dim_reduction_model='pca')
+    # VAE.save(name='VAE1', save_type='weights_and_reconstruction_error')
+
     skip_files = ['level_1', 'level_2',
                   'level_3', 'level_4', 'level_5']
 
-    VAE = VaritationalAutoEncoderSymmetric(img_shape=(40, 40, 1), latent_dimensions=3, batch_size=1)
-    VAE.data_prep_simple(directory_path='../AE_data/test/', skip_files=[])
+    CNND = VaritationalAutoEncoderSymmetric(img_shape=(40, 40, 1), latent_dimensions=2, batch_size=1)
+    CNND.data_prep_simple(directory_path='../AE_data/test_autoencoder1/', skip_files=[])
 
-    VAE.y_train = [0]
-    VAE.define_model()
-    VAE.train(epochs=1000)
-    VAE.inspect_model(n=1, dim_reduction_model='pca')
-    VAE.save(name='VAE1', save_type='weights_and_reconstruction_error')
+    split = 50
+    y_train = []
+    label = 0
+    for i in range(len(CNND.x_train)):
+
+        if i % split == 0:
+            label += 1
+
+        y_train.append(label)
+    y_train = np.array(y_train)
+    #, 349, 399, 439, 499
+
+    c = [49, 99, 149, 199, 249, 299]
+    CNND.x_train = CNND.x_train[c]
+    temp = CNND.x_train
+    CNND.x_train = np.reshape(CNND.x_train[0], (1,) + CNND.x_train[0].shape)
+    CNND.y_train = y_train[c]
+    #  # temp_x_data = CNND.x_train
+    # CNND.x_train = CNND.x_train[0:split]
+    #
+    # CNND.y_train = y_train[0:split*3]
+    # CNND.y_train = [0]
+    CNND.define_model()
+    CNND.train(epochs=200)
+    # CNND.x_train = temp_x_data[0:split*3]
+    CNND.x_train = temp
+    CNND.inspect_model(n=6, dim_reduction_model='pca', interval=1, labels=6, )
+    CNND.save(name='CNND_sim_test2', save_type='weights_and_reconstruction_error')

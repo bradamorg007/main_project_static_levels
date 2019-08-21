@@ -65,6 +65,22 @@ class Agent(pygame.sprite.Sprite):
         else:
             self.functional_system.init_layers(init_type="zeros")
 
+    def reset(self):
+
+        self.velocity_y = 0
+        self.current_closest_block = None
+        self.fuel = 1.0
+
+        self.rect.x = self.starting_xPos
+        self.rect.y = self.starting_yPos
+        self.previous_xPos = self.rect.center[0]
+
+        self.timeSamplesExperianced       = 1
+        self.totalDistanceFromGapOverTime = 0
+
+        self.fitness        = 0
+        self.avgDistFromGap = 0
+
 
 
     def think(self, active_blocks, screen_width, screen_height):
@@ -213,8 +229,9 @@ class Agent(pygame.sprite.Sprite):
 
 
     def computeFitness(self):
-        # penalise agent based on average distance from gap
+
         self.fitness = math.pow(self.fitness, 4)
+
         impactFactor = 0.5 # scales the percentage of penalisation applied
         self.avgDistFromGap = np.floor(self.totalDistanceFromGapOverTime / self.timeSamplesExperianced)
         fitness_penalty =np.floor(impactFactor * self.avgDistFromGap)
@@ -223,22 +240,7 @@ class Agent(pygame.sprite.Sprite):
             self.fitness = 0
 
 
-    def reset(self):
 
-        self.velocity_y = 0
-        self.current_closest_block = None
-        self.fuel = 1.0
-        self.failure_meter = 0.0
-
-        self.rect.x = self.starting_xPos
-        self.rect.y = self.starting_yPos
-        self.previous_xPos = self.rect.center[0]
-
-        self.timeSamplesExperianced       = 1
-        self.totalDistanceFromGapOverTime = 0
-
-        self.fitness        = 0
-        self.avgDistFromGap = 0
 
 
 if __name__ == "__main__":

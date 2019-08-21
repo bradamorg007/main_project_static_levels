@@ -21,8 +21,44 @@ PURPLE = (255, 0, 255)
 SCREEN_WIDTH = 1500
 SCREEN_HEIGHT = 600
 
+#'[400, 460, 560, 100, BLACK]
+def build_blueprint_range(x, start_bottom_y, start_top_y, width, stop=0, multipliers=1, color=BLACK, y_interval=1, x_interval=0):
 
-def build_blueprint(blueprint, multipliers, xPos_interval=None):
+
+    if start_bottom_y > SCREEN_HEIGHT or start_top_y > SCREEN_HEIGHT or start_bottom_y < 0 or start_top_y < 0:
+        raise ValueError('ERROR: Invalid start_bottom_y or start_top_y')
+
+    if y_interval == 0:
+        y_interval = 1
+    elif y_interval > 0:
+        y_interval = y_interval * -1
+
+    output_array = []
+    start_top_y_list = np.arange(start=start_top_y, stop=stop, step=y_interval)
+    stop = stop + start_bottom_y - start_top_y
+    start_bottom_y_list = np.arange(start=start_bottom_y, stop=stop, step=y_interval)
+
+    if len(start_bottom_y_list) != len(start_top_y_list):
+        raise ValueError('ERROR: start_top_y_list and start_bottom_y_list are not th same lengths')
+
+    for i in range(len(start_bottom_y_list)):
+
+        blueprint = [x, int(start_top_y_list[i]), int(start_bottom_y_list[i]), width, color]
+        blueprints = build_blueprint(blueprint, multipliers=multipliers, xPos_interval=x_interval)
+        output_array.append(blueprints)
+        # for item in blueprints:
+        #     output_array.append(item)
+
+
+
+    return output_array
+
+
+
+
+
+
+def build_blueprint(blueprint, multipliers, xPos_interval=0):
 
         level_array = []
 
@@ -141,6 +177,7 @@ def capture(surface, mode, level_number, rescale_shape=(40,40), grayscale=True,
                 capture_success = True
     return capture_success
 
+
 def get_best_winner(winners):
     winners[0].computeFitness()
     max = winners[0].fitness
@@ -166,7 +203,7 @@ def run_model(MODE=None, data_extract=None, SIM_SPEED=None, generation_limit=Non
               ):
     """ Main Program """
     if data_extract is None:
-        MODE = 'test'
+        MODE = 'capture'
         gentic_algorithm_active = True
         data_extract = False
         SIM_SPEED = 1
@@ -183,8 +220,10 @@ def run_model(MODE=None, data_extract=None, SIM_SPEED=None, generation_limit=Non
 
     save_first_winner = False
     level_to_save = 0
+    save_folder_path = 'test_report'
 
-
+    test_levels = build_blueprint_range(x=400, start_bottom_y=600, start_top_y=500, width=100,
+                                        stop=0, multipliers=4, y_interval=1, x_interval=50)
  #390, 490
     level0 = build_blueprint([400, 460, 560, 100, BLACK], multipliers=4, xPos_interval=50)
     level1 = build_blueprint([400, 390, 490, 100, BLACK], multipliers=4, xPos_interval=50)
@@ -192,8 +231,22 @@ def run_model(MODE=None, data_extract=None, SIM_SPEED=None, generation_limit=Non
     level3 = build_blueprint([400, 330, 430, 100, BLACK], multipliers=4, xPos_interval=50)
     level4 = build_blueprint([400, 250, 350, 100, BLACK], multipliers=4, xPos_interval=50)
 
+    level0 = build_blueprint([300, 500, 600, 100, BLACK], multipliers=1, xPos_interval=100)
+    level1 = build_blueprint([300, 480, 580, 100, BLACK], multipliers=2, xPos_interval=90)
+    level2 = build_blueprint([300, 460, 560, 100, BLACK], multipliers=3, xPos_interval=80)
+    level3 = build_blueprint([300, 440, 540, 100, BLACK], multipliers=4, xPos_interval=70)
+    level4 = build_blueprint([300, 420, 520, 100, BLACK], multipliers=5, xPos_interval=60)
+    level5 = build_blueprint([300, 400, 500, 100, BLACK], multipliers=6, xPos_interval=50)
+    level6 = build_blueprint([300, 380, 480, 100, BLACK], multipliers=7, xPos_interval=40)
+    level7 = build_blueprint([300, 360, 460, 100, BLACK], multipliers=8, xPos_interval=30)
+    level8 = build_blueprint([300, 340, 440, 100, BLACK], multipliers=9, xPos_interval=20)
+    level9 = build_blueprint([300, 320, 420, 100, BLACK], multipliers=10, xPos_interval=10)
+    level10 =build_blueprint([300, 300, 400, 100, BLACK], multipliers=11, xPos_interval=0)
+
+
     #level1
-    levels = Block.generate(SCREEN_WIDTH, SCREEN_HEIGHT, 100, level0, level1)
+    levels = Block.generate(SCREEN_WIDTH, SCREEN_HEIGHT, 100, False, level0, level1,level2, level3, level4,
+                            level5, level6,level7, level8, level9, level10)
     #levels = Block.generate(SCREEN_WIDTH, SCREEN_HEIGHT, 100, level1)
 
     agents = AgentManager( mode=MODE,
@@ -242,6 +295,7 @@ def run_model(MODE=None, data_extract=None, SIM_SPEED=None, generation_limit=Non
 
 
     generation_count = 0
+    global_generation_count = 0
     change_level_flag = False
     winners = []
     latent_representation = []
@@ -292,7 +346,7 @@ def run_model(MODE=None, data_extract=None, SIM_SPEED=None, generation_limit=Non
 
         for i in range(SIM_SPEED):
 
-            if MODE == 'train' or 'test':
+            if MODE == 'train' or MODE == 'test':
                 # --- Update Agents ---
                 i = 0
                 while i < len(agents.not_sprites) and i > -1:
@@ -473,11 +527,11 @@ def run_model(MODE=None, data_extract=None, SIM_SPEED=None, generation_limit=Non
                     if skip_ga == False:
 
                         new_population_len = []
+                        generation_count += 1
+                        global_generation_count += 1
                         if gentic_algorithm_active:
 
                             new_population = GenticAlgorithm.produceNextGeneration(population=agents.dead_agents,
-                                                                          screen_width=SCREEN_WIDTH,
-                                                                          screen_height=SCREEN_HEIGHT,
                                                                           agent_meta_data=agents.__dict__)
 
                             if is_target_level and generation_count == target_generation:
@@ -488,6 +542,7 @@ def run_model(MODE=None, data_extract=None, SIM_SPEED=None, generation_limit=Non
                                         sum_fitness += ag.fitness
 
                                     avg_fitness = sum_fitness / (len(agents.dead_agents))
+                                    global_generation_count = -1
                                     done = True
                                     break
 
@@ -519,8 +574,6 @@ def run_model(MODE=None, data_extract=None, SIM_SPEED=None, generation_limit=Non
                             new_population_len = len(agents.dead_agents)
 
 
-                        generation_count += 1
-
                         if print_data:
                             print('generation = %s population size = %s level no = %s / %s' % (
                                 generation_count, new_population_len, current_level_no, len(levels)))
@@ -544,7 +597,7 @@ def run_model(MODE=None, data_extract=None, SIM_SPEED=None, generation_limit=Non
 
         capture_success = capture(surface=screen, mode=MODE, remove_blank_frames=True,
                 level_number=current_level_no,
-                save_folder_path='similarity_tests2', preview=True)
+                save_folder_path=save_folder_path, preview=True)
 
         if MODE == 'capture' and capture_success:
             if current_level_no < len(levels) - 1:
@@ -599,7 +652,7 @@ def run_model(MODE=None, data_extract=None, SIM_SPEED=None, generation_limit=Non
         print('Simulation Terminated')
         print('Simulation Time Length = %s' % start_time)
     pygame.quit()
-    return  avg_fitness
+    return  avg_fitness, global_generation_count
 
 if __name__ == "__main__":
     run_model()

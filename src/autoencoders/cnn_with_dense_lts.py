@@ -10,9 +10,10 @@ import pickle as pkl
 
 class CNN_DenseLatentSpace(AutoEncoder):
 
-    def __init__(self, img_shape, latent_dimensions, batch_size):
+    def __init__(self, img_shape, latent_dimensions, batch_size, print_summary=False):
         super().__init__(img_shape, latent_space_dims=latent_dimensions, batch_size=batch_size)
         self.model_tag = 'CNN'
+        self.print_summary = print_summary
 
     def define_model(self):
         # INPUT LAYER
@@ -33,7 +34,6 @@ class CNN_DenseLatentSpace(AutoEncoder):
         latent_vector = layers.Dense(units=self.latent_space_dims, name='Latent_space',
                                      activity_regularizer=layers.regularizers.l1(10e-5))(x)
         encoder = Model(input_img, latent_vector, name='Encoder')
-        #encoder.summary()
 
         # DECODER =========================================================================================
         decoder_inputs = layers.Input(shape=K.int_shape(latent_vector)[1:])
@@ -51,15 +51,18 @@ class CNN_DenseLatentSpace(AutoEncoder):
                                     activation='sigmoid', name='decoded_img')(d)
 
         decoder = Model(decoder_inputs, decoded_img, name='decoder_model')
-        #decoder.summary()
         z_decoded = decoder(latent_vector)
 
         AE = Model(input_img, z_decoded)
         AE.compile(optimizer='rmsprop', loss='binary_crossentropy')
-        #AE.summary()
 
         encoder.compile(optimizer='rmsprop', loss='binary_crossentropy')
         decoder.compile(optimizer='rmsprop', loss='binary_crossentropy')
+
+        if self.print_summary:
+            encoder.summary()
+            decoder.summary()
+            AE.summary()
 
         self.model = AE
         self.encoder = encoder
@@ -86,13 +89,52 @@ class CNN_DenseLatentSpace(AutoEncoder):
 if __name__ == '__main__':
 
     skip_files = ['level_1', 'level_2',
-                  'level_3', 'level_4', 'level_5']
+                  'level_3', 'level_4', 'level_5', 'level_6', 'level_7', 'level_8', 'level_9']
 
     CNND = CNN_DenseLatentSpace(img_shape=(40, 40, 1), latent_dimensions=3, batch_size=1)
-    CNND.data_prep_simple(directory_path='../AE_data/similarity_tests2/', skip_files=['level_1'])
+    CNND.data_prep_simple(directory_path='../AE_data/sim_test_main_capture/', skip_files=skip_files)
 
     CNND.y_train = [0]
     CNND.define_model()
     CNND.train(epochs=200)
-    CNND.inspect_model(n=1, dim_reduction_model='pca')
-    CNND.save(name='CNND_sim_test', save_type='weights_and_reconstruction_error')
+    CNND.inspect_model(n=1, dim_reduction_model='pca', interval=1, labels=1, )
+    CNND.save(name='CNND_main', save_type='weights_and_reconstruction_error')
+
+
+
+"""   
+    skip_files = ['level_1', 'level_2',
+                  'level_3', 'level_4', 'level_5']
+
+    CNND = CNN_DenseLatentSpace(img_shape=(40, 40, 1), latent_dimensions=1, batch_size=1)
+    CNND.data_prep_simple(directory_path='../AE_data/test_report/', skip_files=[])
+
+    split = 1
+    y_train = []
+    label = 0
+    for i in range(len(CNND.x_train)):
+
+        if i % split == 0:
+            label += 1
+
+        y_train.append(label)
+    y_train = np.array(y_train)
+
+    temp = CNND.x_train
+    c =  [0] #[0,50,100,150,200,250,300]
+    CNND.x_train = CNND.x_train[c]
+    CNND.x_train = np.reshape(CNND.x_train[0], (1,) + CNND.x_train[0].shape)
+    CNND.y_train = y_train
+   #  # temp_x_data = CNND.x_train
+    # CNND.x_train = CNND.x_train[0:split]
+    #
+    # CNND.y_train = y_train[0:split*3]
+    #CNND.y_train = [0]
+    CNND.define_model()
+    CNND.train(epochs=200)
+    #CNND.x_train = temp_x_data[0:split*3]
+    CNND.x_train = temp
+    CNND.inspect_model(n=11, dim_reduction_model='pca', interval=1, labels=11, )
+    CNND.save(name='CNND_sim_test2', save_type='weights_and_reconstruction_error')
+    
+    """

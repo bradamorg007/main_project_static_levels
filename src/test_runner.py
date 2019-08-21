@@ -19,7 +19,7 @@ def progressBar(value, endvalue, bar_length=20):
 
 if __name__ == '__main__':
 
-    filename = 'test_runner2'
+    filename = 'GEN'
     if os.path.isdir('labs') == False:
         os.mkdir('labs')
 
@@ -35,20 +35,23 @@ if __name__ == '__main__':
                                       preview_output=False
                                      )
 
-    tests = 250
-    target_generation = 0
+    tests = 60
+    target_generation = 10
 
     memory_init_fitness_vals = []
     rand_init_fitness_vals = []
+    memory_init_generation_count = []
+    rand_init_generation_count = []
     count = 0
     i = 0
     avg_fitness = None
+    generation_count = None
     while i < tests:
 
         if i % 2 == 0:
             rand = 0.0
             med_memory = 1.0
-            avg_fitness = simulation_test.run_model(MODE='test', data_extract=True, SIM_SPEED=1, generation_limit=10,
+            avg_fitness, generation_count = simulation_test.run_model(MODE='test', data_extract=True, SIM_SPEED=1, generation_limit=10,
                                                     run_time=600, target_levels=[1], print_data=True,
                                                     visual_system=visual_system,
                                                     target_generation=target_generation,
@@ -65,11 +68,14 @@ if __name__ == '__main__':
 
             else:
                 memory_init_fitness_vals.append(avg_fitness)
+                memory_init_generation_count.append(generation_count)
+
+
 
         elif i % 2 == 1:
             rand = 1.0
             med_memory = 0.0
-            avg_fitness = simulation_test.run_model(MODE='test', data_extract=True, SIM_SPEED=1, generation_limit=10,
+            avg_fitness, generation_count = simulation_test.run_model(MODE='test', data_extract=True, SIM_SPEED=1, generation_limit=10,
                                                     run_time=600, target_levels=[1], print_data=True,
                                                     target_generation=target_generation,
                                                     visual_system=visual_system,
@@ -85,6 +91,7 @@ if __name__ == '__main__':
                 tests -= 2
             else:
                 rand_init_fitness_vals.append(avg_fitness)
+                rand_init_generation_count.append(generation_count)
 
         if avg_fitness != 'ERROR_AGENT_DEATH' or avg_fitness is not None:
             print('test = %s / %s' % (i, tests))
@@ -125,19 +132,28 @@ if __name__ == '__main__':
         rand_init_final_vals.append(x)
 
 
-    fig = plt.figure()
+    fig = plt.figure(1)
     plt.plot(memory_init_final_vals, color='k', marker='o')
     plt.plot(rand_init_final_vals, color='r', marker='o')
     plt.title('Average fitness of Agents using random and memory assisted adaptation')
     plt.xlabel('Number of Tests')
     plt.ylabel('Average fitness')
     plt.legend(['Memory Assisted adaptation','Random Assisted adaptation' ])
-    ticks = np.arange(tests/2).tolist()
-    plt.xticks(ticks)
     plt.grid()
+
+    fig2 = plt.figure(2)
+    plt.plot(memory_init_generation_count, color='k', marker='o')
+    plt.plot(rand_init_generation_count, color='r', marker='o')
+    plt.title('Number of Generations for Agents to complete a Level using random and memory assisted adaptation')
+    plt.xlabel('Number of Tests')
+    plt.ylabel('Number of Generations')
+    plt.legend(['Memory Assisted adaptation','Random Assisted adaptation' ])
+    plt.grid()
+
     plt.show()
 
-    fig.savefig(os.path.join('labs','test_runner_results', filename))
+    fig.savefig(os.path.join('labs','test_runner_results', filename + 'avg_fitness'))
+    fig2.savefig(os.path.join('labs', 'test_runner_results', filename + 'gen_count'))
 
 
 

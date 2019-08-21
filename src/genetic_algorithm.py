@@ -12,7 +12,7 @@ class GenticAlgorithm:
 
 
     @staticmethod
-    def produceNextGeneration(population, screen_width, screen_height, agent_meta_data):
+    def produceNextGeneration(population, agent_meta_data):
 
         # // To produce the next generation several steps are required
         #
