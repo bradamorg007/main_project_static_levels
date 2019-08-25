@@ -1,0 +1,28 @@
+STM with settings high_sim = x and low_sim = x 
+The system plays it safe, it is very sensitive to small descrepencies and therefore will choice to adapt to any small
+deviations from what it is used to, but it uses previous information to adapt which allows it to find a solution quickly.
+
+Change settings so it is less senstive to small decrepencies. This time STM will choice to use to just use a pre-existing 
+solution without associative adaptation.  
+
+
+Files
+Reoccurance 1 - Test of reoccurance
+Reoccurance 1_2 - same as reccurance 1 with a gate, this is test of memeory association
+
+Idea to show association would be to look at the weights of model that used a memory to its adaption. The agents weights 
+should be noticably simular to memory solutions weights than randomly init weights. just pot all the value of the 
+weight in scatter plot
+
+Test this way - run the STM on 2 level the first levl will be used as a memeory and the second level will use the 1t level
+as an associative anchor. Run the STM on level 2 for one iteration, get the winning solution and its weights. INSTEAD
+MAYBE FIND the comparison weights using random search get a 100 solutions that work by randomly search the weight 
+space randomly. Average these or let it form a cloud. yes use random 
+
+Then run the test using the STM another x (maybe like 100-1000) times, collect the weight values of the best agent for 
+that initaisation. 
+
+Do the same using a GA that uses random init for the first iteration 
+
+Averge the weight value forthe target weight distribution against the STM and GA the plot them against each other.
+The memory based weights should be closer to the random solutions more often than the GA with just one iteration
